@@ -1,3 +1,14 @@
+<script setup>
+import { RouterLink } from 'vue-router'
+import { ref } from 'vue'
+
+const props = defineProps({
+  amountCart: Number
+})
+
+</script>
+
+
 <template>
   <div class="navbar">
       <div class="links">
@@ -7,16 +18,12 @@
         </div>
           <RouterLink to="/cart">
             <img src="@/assets/img/shopping-cart-64.png" alt="shopping cart">
-            <div class="badge">0</div>
+            <div class="badge">{{ amountCart }}</div>
           </RouterLink>
       </div>
     </div>
 </template>
 
-<script>
-import { RouterLink } from 'vue-router'
-
-</script>
 
 
 

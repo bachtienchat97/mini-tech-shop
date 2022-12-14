@@ -5,17 +5,15 @@ import { PRODUCTS } from "@/db/db";
 
 import { ref } from "vue";
 
-const count = ref(0);
+const amountCart = ref(0);
 
-function addToCart(id){
-    if(id) {
-        count.value ++
-    }
+function addToCart(count){
+  if(count > 0) amountCart.value++
 } 
 </script>
 
 <template>
-    <Navbar/>
+    <Navbar :amountCart="amountCart"/>
     <div class="shop">
       <div class="shopTitle">
         <h1>Mini Tech Shop</h1>
@@ -30,7 +28,7 @@ function addToCart(id){
                 </p>
                 <p>{{item.price}} $</p>
             </div>
-            <AddToCart :item="item.id"></AddToCart>
+            <AddToCart v-bind:id="item.id" v-on:add-to-cart="addToCart"></AddToCart>
         </div>
       </div>
     </div>

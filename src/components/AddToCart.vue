@@ -1,19 +1,22 @@
 <script setup>
-import { ref } from 'vue'
-    const props = defineProps({
-      item: Number
-    })
-    const count = ref(0)
+import { ref, defineEmits, defineProps } from 'vue'
+  const props = defineProps({
+    id: Number
+  })
 
-    function addToCart(id) {
-      if(id) {
-        count.value++
-      }
-    }
+  const emit = defineEmits(['add-to-cart'])
+
+  const count = ref(0)
+
+  const addToCart = (id) => {
+    console.log(id,'id')
+    count.value++
+    emit('add-to-cart', count.value)
+  }
 </script>
 
 <template>
-  <button class="addToCartBttn" @click="addToCart(item)">
+  <button class="addToCartBttn" @click="addToCart(props.id)">
       Add To Cart  {{ count > 0 ? `(${count})` : null }}
   </button>
 </template>
