@@ -9,6 +9,7 @@
     "test:unit": "vitest --environment jsdom --root src/"
   },
   "dependencies": {
+    "phosphor-vue": "^1.4.2",
     "pinia": "^2.0.28",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6"
@@ -16,6 +17,7 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",
     "@vue/test-utils": "^2.2.6",
+    "file-loader": "^6.2.0",
     "jsdom": "^20.0.3",
     "vite": "^4.0.0",
     "vitest": "^0.25.6"
