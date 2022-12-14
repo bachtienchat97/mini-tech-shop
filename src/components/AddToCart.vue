@@ -1,23 +1,28 @@
 <script setup>
-import { ref, defineEmits, defineProps } from 'vue'
-  const props = defineProps({
-    id: Number
-  })
+import { ref } from 'vue'
+import { storeToRefs } from 'pinia';
+import { useCounterStore } from '@/stores/counter';
 
-  const emit = defineEmits(['add-to-cart'])
+const store = useCounterStore();
+const props = defineProps({
+  idProducts: Number
+})
+const { count } = storeToRefs(store);
 
-  const count = ref(0)
+const countCart = ref(0);
 
   const addToCart = (id) => {
-    console.log(id,'id')
-    count.value++
-    emit('add-to-cart', count.value)
+    console.log(id)
+    if(id) {
+      count.value++
+      countCart.value++
+    }
   }
 </script>
 
 <template>
-  <button class="addToCartBttn" @click="addToCart(props.id)">
-      Add To Cart  {{ count > 0 ? `(${count})` : null }}
+  <button class="addToCartBttn" @click="addToCart(props.idProducts)">
+      Add To Cart  {{ countCart > 0 ? `(${countCart})` : null }}
   </button>
 </template>
 
