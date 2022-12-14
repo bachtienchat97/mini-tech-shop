@@ -1,3 +1,17 @@
+<script setup>
+import { RouterLink } from 'vue-router'
+import { ref } from 'vue'
+
+import { storeToRefs } from 'pinia';
+import { useCounterStore } from '@/stores/counter';
+
+const store = useCounterStore();
+
+const { count } = storeToRefs(store);
+
+</script>
+
+
 <template>
   <div class="navbar">
       <div class="links">
@@ -7,16 +21,12 @@
         </div>
           <RouterLink to="/cart">
             <img src="@/assets/img/shopping-cart-64.png" alt="shopping cart">
-            <div class="badge">0</div>
+            <div class="badge">{{ count }}</div>
           </RouterLink>
       </div>
     </div>
 </template>
 
-<script>
-import { RouterLink } from 'vue-router'
-
-</script>
 
 
 
@@ -54,7 +64,7 @@ import { RouterLink } from 'vue-router'
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 40px;
+  padding: 0 100px;
 }
 
 .links a {

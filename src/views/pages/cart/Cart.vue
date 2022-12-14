@@ -1,59 +1,65 @@
 <script setup>
 import Navbar from "@/components/Navbar.vue";
+import CartItem from "@/components/CartItem.vue";
+
+import { storeToRefs } from 'pinia';
+import { useCounterStore } from '@/stores/counter';
+const store = useCounterStore();
+const { count } = storeToRefs(store);
 
 </script>
 
 <template>
-  <Navbar/>
-   <div className="cart">
-      <div>
-        <h1>Your Cart Items</h1>
-      </div>
-      <div className="cart">
-        {PRODUCTS.map((product) => {
-          if (cartItems[product.id] !== 0) {
-            return <CartItem data={product} />;
-          }
-        })}
+  <Navbar />
+  <div className="cart">
+    <div>
+      <h1>Your Cart Items</h1>
+    </div>
+    <div className="cart">
+      <CartItem />
+
+      <div className="checkout">
+        <p>Subtotal: ${{ count }}</p>
+        <div class="wrap-btn">
+        <router-link to="/">
+          <button>Continue Shopping</button>
+        </router-link>
+
+        <router-link to="/checkout">
+          <button>Checkout</button>
+        </router-link>
+        </div>
+
       </div>
 
-      {totalAmount > 0 ? (
-        <div className="checkout">
-          <p> Subtotal: ${totalAmount} </p>
-          <button @click="$router.push("/")"> Continue Shopping </button>
-          <button
-            onClick={() => {
-              checkout();
-              navigate("/checkout");
-            }}
-          >
-            {" "}
-            Checkout{" "}
-          </button>
-        </div>
-      ) : (
-        <h1> Your Shopping Cart is Empty</h1>
-      )}
+      <h1 v-if="false">Your Shopping Cart is Empty</h1>
     </div>
+  </div>
 </template>
 
-<style scoped>
+<style>
 .cart {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 40px 0;
 }
 
-.cartItem {
-  width: 700px;
-  height: 250px;
+.wrap-cart {
   display: flex;
-
+  flex-direction: column;
   align-items: center;
-  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
+  width: 700px;
+  padding: 25px;
+  box-shadow: 0px 3px 15px rgb(0 0 0 / 20%);
   border-radius: 25px;
   margin: 30px;
+}
+.cartItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .cartItem img {
@@ -61,6 +67,9 @@ import Navbar from "@/components/Navbar.vue";
 }
 
 .cartItem .description {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
   font-size: 30px;
 }
@@ -69,6 +78,17 @@ import Navbar from "@/components/Navbar.vue";
   width: 40px;
   text-align: center;
   font-weight: bolder;
+}
+
+.checkout {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.checkout .wrap-btn {
+  display: flex;
+  align-items: center;
 }
 
 .checkout button {
@@ -80,6 +100,12 @@ import Navbar from "@/components/Navbar.vue";
   border-radius: 8px;
   margin: 10px;
   cursor: pointer;
+  transition: 0.4s ease;
 }
 
+.wrap-btn :hover button{
+  background-color: #ffffff;
+  color: rgb(19, 19, 19);
+  border: 1px solid rgb(19, 19, 19);
+}
 </style>
