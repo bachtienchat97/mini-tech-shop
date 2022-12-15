@@ -3,19 +3,25 @@ import { ref } from 'vue'
 import { storeToRefs } from 'pinia';
 import { useCounterStore } from '@/stores/counter';
 
+
+import { PRODUCTS } from "@/db/db";
+
 const store = useCounterStore();
+const { amountCartITem } = storeToRefs(store);
 const props = defineProps({
   idProducts: Number
 })
-const { count } = storeToRefs(store);
 
 const countCart = ref(0);
-
+const emit = defineEmits(['add-cart'])
+  
   const addToCart = (id) => {
-    console.log(id)
     if(id) {
-      count.value++
       countCart.value++
+    const item = PRODUCTS.find((item) => {
+      return item.id === id
+    })
+    emit('add-cart', item)
     }
   }
 </script>

@@ -2,9 +2,16 @@
 import Navbar from "@/components/Navbar.vue";
 import AddToCart from "@/components/AddToCart.vue";
 import { PRODUCTS } from "@/db/db";
+import { useCounterStore } from '@/stores/counter';
 
 import { ref } from "vue";
 
+const store = useCounterStore();
+
+const addCart = (cartItem) => {
+  store.addItem(cartItem)
+
+}
 </script>
 
 <template>
@@ -23,7 +30,7 @@ import { ref } from "vue";
                 </p>
                 <p>{{item.price}} $</p>
             </div>
-            <AddToCart v-bind:idProducts="item.id"></AddToCart>
+            <AddToCart v-bind:idProducts="item.id" @add-cart="addCart"></AddToCart>
         </div>
       </div>
     </div>
