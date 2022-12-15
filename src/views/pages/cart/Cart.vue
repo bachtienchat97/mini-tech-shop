@@ -5,13 +5,13 @@ import CartItem from "@/components/CartItem.vue";
 import { storeToRefs } from 'pinia';
 import { useCounterStore } from '@/stores/counter';
 const store = useCounterStore();
-const { count } = storeToRefs(store);
+const { totalMoney,resItem } = storeToRefs(store);
 
 </script>
 
 <template>
   <Navbar />
-  <div className="cart">
+  <div className="cart" v-if="resItem.length">
     <div>
       <h1>Your Cart Items</h1>
     </div>
@@ -19,7 +19,7 @@ const { count } = storeToRefs(store);
       <CartItem />
 
       <div className="checkout">
-        <p>Subtotal: ${{ count }}</p>
+        <p>Subtotal: ${{ totalMoney }}</p>
         <div class="wrap-btn">
         <router-link to="/">
           <button>Continue Shopping</button>
@@ -32,9 +32,10 @@ const { count } = storeToRefs(store);
 
       </div>
 
-      <h1 v-if="false">Your Shopping Cart is Empty</h1>
     </div>
   </div>
+
+    <h1 v-else style="text-align: center; marginTop: 20px;">Your Shopping Cart is Empty</h1>
 </template>
 
 <style>

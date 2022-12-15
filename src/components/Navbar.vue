@@ -7,7 +7,7 @@ import { useCounterStore } from '@/stores/counter';
 
 const store = useCounterStore();
 
-const { count } = storeToRefs(store);
+const { amountToTalCart } = storeToRefs(store);
 
 </script>
 
@@ -21,7 +21,7 @@ const { count } = storeToRefs(store);
         </div>
           <RouterLink to="/cart">
             <img src="@/assets/img/shopping-cart-64.png" alt="shopping cart">
-            <div class="badge">{{ count }}</div>
+            <div class="badge">{{ amountToTalCart }}</div>
           </RouterLink>
       </div>
     </div>

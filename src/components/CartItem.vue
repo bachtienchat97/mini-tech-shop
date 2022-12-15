@@ -1,16 +1,16 @@
 <script setup>
 import { PRODUCTS } from "@/db/db";
-import { ref } from 'vue'
 
-const ItemCartAdded = () => {
-  const res = PRODUCTS.filter((item,index,arr)=> item.id === arr[index].id)
-  return res;
-}
+import { storeToRefs } from 'pinia';
+import { useCounterStore } from '@/stores/counter';
+const store = useCounterStore();
+const { resItem } = storeToRefs(store);
+
 </script>
  
 <template>
  <div class="cartItem">
-    <div class="wrap-cart" v-for="item in PRODUCTS" :key="item.id">
+    <div class="wrap-cart" v-for="item in resItem.flat(2)" :key="item.id">
       <img :src="item.productImage" />
       <div class="description">
         <p>
