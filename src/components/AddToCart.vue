@@ -7,7 +7,7 @@ import { useCounterStore } from '@/stores/counter';
 import { PRODUCTS } from "@/db/db";
 
 const store = useCounterStore();
-const { amountCartITem } = storeToRefs(store);
+const { amountCartITem } = storeToRefs(store); //un-used
 const props = defineProps({
   idProducts: Number
 })

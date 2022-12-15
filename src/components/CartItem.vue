@@ -20,7 +20,7 @@ const { resItem } = storeToRefs(store);
         <div class="countHandler">
           <button @click="removeFromCart(item.id)"> - </button>
           <input
-            value="1"
+            :value="0"
             @change="(e) => updateCartItemCount(Number(e.target.value), id)"
           />
           <button @click="addToCart(item.id)"> + </button>

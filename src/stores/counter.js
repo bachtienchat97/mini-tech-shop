@@ -5,7 +5,6 @@ export const useCounterStore = defineStore('counter', () => {
   const resItem = ref([]);
   const amountToTalCart = ref(0)
   const totalMoney = ref(0)
-  // const doubleCount = computed(() => count.value * 2)
   async function addItem(item) {
     resItem.value.push(item)
     totalMoney.value += item.price;
