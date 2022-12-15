@@ -10,8 +10,9 @@ const store = useCounterStore();
 
 const addCart = (cartItem) => {
   store.addItem(cartItem)
-
 }
+
+
 </script>
 
 <template>
