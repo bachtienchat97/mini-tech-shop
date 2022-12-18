@@ -1,13 +1,12 @@
 <script setup>
-import { RouterLink } from 'vue-router'
-import { ref } from 'vue'
+import { RouterLink } from 'vue-router';
 
 import { storeToRefs } from 'pinia';
 import { useCounterStore } from '@/stores/counter';
 
 const store = useCounterStore();
 
-const { amountToTalCart } = storeToRefs(store);
+const { totalCart } = storeToRefs(store);
 
 </script>
 
@@ -21,14 +20,11 @@ const { amountToTalCart } = storeToRefs(store);
         </div>
           <RouterLink to="/cart">
             <img src="@/assets/img/shopping-cart-64.png" alt="shopping cart">
-            <div class="badge">{{ amountToTalCart }}</div>
+            <div class="badge" v-show="totalCart > 0">{{ totalCart }}</div>
           </RouterLink>
       </div>
     </div>
 </template>
-
-
-
 
 <style scoped>
 .navbar {
