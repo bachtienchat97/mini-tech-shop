@@ -2,16 +2,6 @@
 import Navbar from "@/components/Navbar.vue";
 import AddToCart from "@/components/AddToCart.vue";
 import { PRODUCTS } from "@/db/db";
-import { useCounterStore } from '@/stores/counter';
-
-import { ref } from "vue";
-
-const store = useCounterStore();
-
-const addCart = (cartItem) => {
-  store.addItem(cartItem)
-}
-
 
 </script>
 
@@ -23,7 +13,7 @@ const addCart = (cartItem) => {
       </div>
 
       <div class="products">
-        <div class="product" v-for="(item,index) in PRODUCTS" :key="item.id">
+        <div class="product" v-for="item in PRODUCTS" :key="item.id">
             <img :src="item.productImage" />
             <div class="description">
                 <p>
@@ -31,7 +21,7 @@ const addCart = (cartItem) => {
                 </p>
                 <p>{{item.price}} $</p>
             </div>
-            <AddToCart v-bind:idProducts="item.id" @add-cart="addCart"></AddToCart>
+            <AddToCart v-bind:idProducts="item.id" ></AddToCart>
         </div>
       </div>
     </div>
@@ -69,11 +59,12 @@ const addCart = (cartItem) => {
 
 .product img {
   width: 250px;
-  margin: 0 20px;
+  margin: 0 20px 10px 20px;
 }
 
 .product .description {
   text-align: center;
+  margin-bottom: 10px;
 }
 
 .product:hover {

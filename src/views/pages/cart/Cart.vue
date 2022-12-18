@@ -5,13 +5,13 @@ import CartItem from "@/components/CartItem.vue";
 import { storeToRefs } from 'pinia';
 import { useCounterStore } from '@/stores/counter';
 const store = useCounterStore();
-const { totalMoney,resItem } = storeToRefs(store);
+const { totalMoney,arrItemCart } = storeToRefs(store);
 
 </script>
 
 <template>
   <Navbar />
-  <div className="cart" v-if="resItem.length">
+  <div className="cart" v-if="arrItemCart.length">
     <div>
       <h1>Your Cart Items</h1>
     </div>
@@ -19,15 +19,15 @@ const { totalMoney,resItem } = storeToRefs(store);
       <CartItem />
 
       <div className="checkout">
-        <p>Subtotal: ${{ totalMoney }}</p>
+        <p style="marginBottom: 15px;">Subtotal: ${{ Math.round(totalMoney) }}</p>
         <div class="wrap-btn">
-        <router-link to="/">
-          <button>Continue Shopping</button>
-        </router-link>
+          <router-link to="/">
+            <button>Continue Shopping</button>
+          </router-link>
 
-        <router-link to="/checkout">
-          <button>Checkout</button>
-        </router-link>
+          <router-link to="/checkout">
+            <button>Checkout</button>
+          </router-link>
         </div>
 
       </div>
@@ -35,7 +35,12 @@ const { totalMoney,resItem } = storeToRefs(store);
     </div>
   </div>
 
-    <h1 v-else style="text-align: center; marginTop: 20px;">Your Shopping Cart is Empty</h1>
+    <div class="wrap-empty-cart" v-else>
+      <h1 style="text-align: center; marginTop: 20px;">Your Shopping Cart is Empty</h1>
+      <router-link to="/" class="redirect">
+            <button>Continue Shopping</button>
+      </router-link>
+    </div>
 </template>
 
 <style>
@@ -87,6 +92,32 @@ const { totalMoney,resItem } = storeToRefs(store);
   flex-direction: column;
 }
 
+.wrap-empty-cart {
+  margin: 0 auto;
+  width: 50%;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.redirect button{
+  width: 150px;
+  height: 50px;
+  background-color: #ffffff;
+  color: rgb(19, 19, 19);
+  border: 2px solid rgb(19, 19, 19);
+  border-radius: 8px;
+  margin: 10px;
+  cursor: pointer;
+  transition: 0.4s ease;
+}
+
+.wrap-empty-cart :hover button{
+  background-color: rgb(19, 19, 19);
+  color: #ffffff;
+  border: 2px solid rgb(19, 19, 19);
+}
+
 .checkout .wrap-btn {
   display: flex;
   align-items: center;
@@ -95,18 +126,18 @@ const { totalMoney,resItem } = storeToRefs(store);
 .checkout button {
   width: 150px;
   height: 50px;
-  background-color: rgb(19, 19, 19);
-  color: white;
-  border: none;
+  background-color: #ffffff;
+  color: rgb(19, 19, 19);
+  border: 1px solid rgb(19, 19, 19);
   border-radius: 8px;
   margin: 10px;
   cursor: pointer;
-  transition: 0.4s ease;
+  transition: 0.3s ease;
 }
 
 .wrap-btn :hover button{
-  background-color: #ffffff;
-  color: rgb(19, 19, 19);
+  background-color: rgb(19, 19, 19);
+  color: #ffffff;
   border: 1px solid rgb(19, 19, 19);
 }
 </style>

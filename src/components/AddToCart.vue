@@ -7,7 +7,9 @@ import { useCounterStore } from '@/stores/counter';
 import { PRODUCTS } from "@/db/db";
 
 const store = useCounterStore();
-const { amountCartITem } = storeToRefs(store); //un-used
+const { amountCartITem } = storeToRefs(store); //un-
+const { addCart } = store;
+
 const props = defineProps({
   idProducts: Number
 })
@@ -21,9 +23,11 @@ const emit = defineEmits(['add-cart'])
     const item = PRODUCTS.find((item) => {
       return item.id === id
     })
-    emit('add-cart', item)
+    store.countItem(id);
+    store.addCart(item,id);
     }
   }
+  
 </script>
 
 <template>
@@ -38,10 +42,7 @@ const emit = defineEmits(['add-cart'])
   background-color: transparent;
   border: 2px solid rgb(19, 19, 19);
   min-width: 100px;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding: 8px 20px;
   border-radius: 15px;
 }
 
