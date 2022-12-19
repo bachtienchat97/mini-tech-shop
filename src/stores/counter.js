@@ -8,6 +8,7 @@ export const useCounterStore = defineStore('counter', () => {
   const countItemArr = ref([]);
   const totalCart = ref(0);
   const totalMoney = ref(0);
+  const cart = ref([]);
 
   function removeFromCart(id) {
     const findDuplicate = arrItemCart.value.filter((item,index) => {
@@ -22,6 +23,7 @@ export const useCounterStore = defineStore('counter', () => {
       totalMoney.value -= itemFinded.price;
       let newArr = arrItemCart.value.slice(itemDuplicate + 1);
       arrItemCart.value = newArr;
+      cart.value = arrItemCart.value;
     }
 
     if( findDuplicate.length === 0 ) {
@@ -30,6 +32,7 @@ export const useCounterStore = defineStore('counter', () => {
       const index = arrItemCart.value.indexOf(itemFinded);
       let newArr = arrItemCart.value.slice(index + 1);
       arrItemCart.value = newArr;
+      cart.value = arrItemCart.value;
     }
   }
 
@@ -54,5 +57,5 @@ export const useCounterStore = defineStore('counter', () => {
     //based on amounts value of input to caculate total money
   }
 
-  return { countItemArr, arrItemCart, totalMoney, totalCart, removeFromCart, addCart ,updateCartItemCount, countItem}
+  return { cart,countItemArr, arrItemCart, totalMoney, totalCart, removeFromCart, addCart ,updateCartItemCount, countItem}
 })
