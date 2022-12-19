@@ -1,23 +1,38 @@
 <script setup>
-import { ref, defineEmits, defineProps } from 'vue'
-  const props = defineProps({
-    id: Number
-  })
+import { ref } from 'vue'
+import { storeToRefs } from 'pinia';
+import { useCounterStore } from '@/stores/counter';
 
-  const emit = defineEmits(['add-to-cart'])
 
-  const count = ref(0)
+import { PRODUCTS } from "@/db/db";
 
+const store = useCounterStore();
+const { amountCartITem } = storeToRefs(store); //un-
+const { addCart } = store;
+
+const props = defineProps({
+  idProducts: Number
+})
+
+const countCart = ref(0);
+const emit = defineEmits(['add-cart'])
+  
   const addToCart = (id) => {
-    console.log(id,'id')
-    count.value++
-    emit('add-to-cart', count.value)
+    if(id) {
+      countCart.value++
+    const item = PRODUCTS.find((item) => {
+      return item.id === id
+    })
+    store.countItem(id);
+    store.addCart(item,id);
+    }
   }
+  
 </script>
 
 <template>
-  <button class="addToCartBttn" @click="addToCart(props.id)">
-      Add To Cart  {{ count > 0 ? `(${count})` : null }}
+  <button class="addToCartBttn" @click="addToCart(props.idProducts)">
+      Add To Cart  {{ countCart > 0 ? `(${countCart})` : null }}
   </button>
 </template>
 
@@ -27,10 +42,7 @@ import { ref, defineEmits, defineProps } from 'vue'
   background-color: transparent;
   border: 2px solid rgb(19, 19, 19);
   min-width: 100px;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding: 8px 20px;
   border-radius: 15px;
 }
 

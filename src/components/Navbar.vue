@@ -1,10 +1,12 @@
 <script setup>
-import { RouterLink } from 'vue-router'
-import { ref } from 'vue'
+import { RouterLink } from 'vue-router';
 
-const props = defineProps({
-  amountCart: Number
-})
+import { storeToRefs } from 'pinia';
+import { useCounterStore } from '@/stores/counter';
+
+const store = useCounterStore();
+
+const { totalCart } = storeToRefs(store);
 
 </script>
 
@@ -18,14 +20,11 @@ const props = defineProps({
         </div>
           <RouterLink to="/cart">
             <img src="@/assets/img/shopping-cart-64.png" alt="shopping cart">
-            <div class="badge">{{ amountCart }}</div>
+            <div class="badge" v-show="totalCart > 0">{{ totalCart }}</div>
           </RouterLink>
       </div>
     </div>
 </template>
-
-
-
 
 <style scoped>
 .navbar {
@@ -61,7 +60,7 @@ const props = defineProps({
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 40px;
+  padding: 0 100px;
 }
 
 .links a {
