@@ -2,16 +2,15 @@
 import { PRODUCTS } from '@/db/db';
 import Input from "@/components/Input.vue";
 
-import { ref,onMounted } from 'vue';
+import { onMounted } from 'vue';
 
 import { storeToRefs } from "pinia";
 import { useCounterStore } from "@/stores/counter";
 
 const store = useCounterStore();
-const { arrItemCart } = storeToRefs(store);
+const { arrItemCart,cart } = storeToRefs(store);
 const { addCart,removeFromCart } = store;
 
-const arrCart = ref([]);
 
 onMounted(() => {
   handleDuplicateCart();
@@ -19,11 +18,15 @@ onMounted(() => {
 
 function handleDuplicateCart() {
 const arrLength = arrItemCart.value.length;
+
   if(arrLength) {
     const abortDup = arrItemCart.value.filter((items,index) => {
       return arrItemCart.value.indexOf(items) === index
     })
-    arrCart.value = abortDup; //no need flat arr
+
+    if(abortDup.length) {
+      cart.value = abortDup; //no need flat arr
+    }
   }
 }
 
@@ -38,7 +41,7 @@ function addToCart(id) {
  
 <template>
   <div class="cartItem">
-    <div class="wrap-cart" v-for="item in arrCart" :key="item.id">
+    <div class="wrap-cart" v-for="item in cart" :key="item.id">
       <img :src="item.productImage" />
       <div class="description">
         <p>
@@ -47,7 +50,7 @@ function addToCart(id) {
         <p>Price: ${{ item.price }}</p>
         <div class="countHandler">
           <button class="left" @click="removeFromCart(item.id)">-</button>
-          <Input :id="item.id" />
+          <Input :id="item.id"/>
           <button class="right" @click="addToCart(item.id)">+</button>
         </div>
       </div>
