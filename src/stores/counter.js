@@ -9,7 +9,7 @@ export const useCounterStore = defineStore('counter', () => {
   const cart = ref([]);
 
   function removeFromCart(id) {
-    const arrLength = arrItemCart.value.length;
+    
     const findDuplicate = arrItemCart.value.filter((item,index) => {
       return arrItemCart.value.indexOf(item) !== index;
     })
@@ -22,7 +22,7 @@ export const useCounterStore = defineStore('counter', () => {
       totalMoney.value -= itemFinded.price;
       arrItemCart.value.splice(firstItemDup,1);
       cart.value = arrItemCart.value;
-      totalCart.value = arrLength;
+      totalCart.value = arrItemCart.value.length;
     }
 
     if(  itemFinded.id === id && findDuplicate.length === 0 && totalMoney.value > 0) {
@@ -31,8 +31,7 @@ export const useCounterStore = defineStore('counter', () => {
       if(index > -1) {
         arrItemCart.value.splice(index,1);
         cart.value =  arrItemCart.value;
-        const arrLength = cart.value.length
-        totalCart.value = arrLength;
+        totalCart.value = arrItemCart.value.length;
       }
     }
   }
