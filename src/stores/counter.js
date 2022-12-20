@@ -1,7 +1,5 @@
-import { ref } from 'vue'
-import { defineStore } from 'pinia'
-
-import { firstDupeIndex } from '@/helpers/firstDuplicate';
+import { ref } from 'vue';
+import { defineStore } from 'pinia';
 
 export const useCounterStore = defineStore('counter', () => {
   const arrItemCart = ref([]);
@@ -11,35 +9,39 @@ export const useCounterStore = defineStore('counter', () => {
   const cart = ref([]);
 
   function removeFromCart(id) {
+    const arrLength = arrItemCart.value.length;
     const findDuplicate = arrItemCart.value.filter((item,index) => {
-      return arrItemCart.value.indexOf(item) !== index
+      return arrItemCart.value.indexOf(item) !== index;
     })
-
-    const itemFinded = arrItemCart.value.find(item => item.id === id)
-    //find out the first position of item duplicate from array 
-    const itemDuplicate = firstDupeIndex(arrItemCart.value);
-    if(findDuplicate.length > 0) {
-      totalCart.value--;
+    const itemFinded = arrItemCart.value.find(item => {
+      return item.id === id
+    })
+    let firstItemDup = arrItemCart.value.findIndex(item => item.id === itemFinded.id)
+    //find out the first position index of item duplicate from array 
+    if( itemFinded.id === id && findDuplicate.length > 0 && totalMoney.value > 0) {
       totalMoney.value -= itemFinded.price;
-      let newArr = arrItemCart.value.slice(itemDuplicate + 1);
-      arrItemCart.value = newArr;
+      arrItemCart.value.splice(firstItemDup,1);
       cart.value = arrItemCart.value;
+      totalCart.value = arrLength;
     }
 
-    if( findDuplicate.length === 0 ) {
-      totalCart.value--;
+    if(  itemFinded.id === id && findDuplicate.length === 0 && totalMoney.value > 0) {
       totalMoney.value -= itemFinded.price;
-      const index = arrItemCart.value.indexOf(itemFinded);
-      let newArr = arrItemCart.value.slice(index + 1);
-      arrItemCart.value = newArr;
-      cart.value = arrItemCart.value;
+      const index = arrItemCart.value.indexOf(itemFinded)
+      if(index > -1) {
+        arrItemCart.value.splice(index,1);
+        cart.value =  arrItemCart.value;
+        const arrLength = cart.value.length
+        totalCart.value = arrLength;
+      }
     }
   }
 
   function addCart(item,id) {
-    arrItemCart.value.push(item)
+    arrItemCart.value.push(item);
+    let arrLength = arrItemCart.value.length;
     if(id) {
-      totalCart.value++
+      totalCart.value = arrLength;
       const res = arrItemCart.value.find(items => {
         return items.id === id
       })
