@@ -2,7 +2,7 @@
 import { PRODUCTS } from '@/db/db';
 import Input from "@/components/Input.vue";
 
-import { onMounted } from 'vue';
+import { ref,onMounted,onBeforeUpdate } from 'vue';
 
 import { storeToRefs } from "pinia";
 import { useCounterStore } from "@/stores/counter";
@@ -11,21 +11,30 @@ const store = useCounterStore();
 const { arrItemCart,cart } = storeToRefs(store);
 const { addCart,removeFromCart } = store;
 
+const abortDup = ref([]);
 
 onMounted(() => {
+  handleDuplicateCart();
+})
+
+onBeforeUpdate(() => {
   handleDuplicateCart();
 })
 
 function handleDuplicateCart() {
 const arrLength = arrItemCart.value.length;
 
-  if(arrLength) {
+  if(arrLength > 0) {
+    const isDup = arrItemCart.value.filter((items,index) => {
+      return arrItemCart.value.indexOf(items) !== index
+    })
+
     const abortDup = arrItemCart.value.filter((items,index) => {
       return arrItemCart.value.indexOf(items) === index
     })
 
-    if(abortDup.length) {
-      cart.value = abortDup; //no need flat arr
+    if(isDup.length > 0) {
+      cart.value = abortDup;
     }
   }
 }
